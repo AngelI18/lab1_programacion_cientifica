@@ -1,4 +1,4 @@
 Integrantes:
-  Angel Iriarte
-  Claudio Monsalve
+  Angel Iriarte,
+  Claudio Monsalve,
   Diego Ravanal
