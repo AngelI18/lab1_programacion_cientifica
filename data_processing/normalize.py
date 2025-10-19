@@ -1,6 +1,6 @@
 import string
 
-__all__ = ['normalize_text']
+__all__ = ['normalize']
 
 class _diccionary:
 
@@ -75,7 +75,7 @@ def normalize(texto, language):
     diccionary_instance = _diccionary()
     texto = texto.lower()
     if language == 'en':
-        texto = _expansion(texto)
+        texto = _expansion(texto, diccionary_instance)
     newTexto = ""
     largo = len(texto)
     for i in range(largo):
