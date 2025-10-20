@@ -9,5 +9,5 @@ def CalculoIDF(corpus):
         for word in words_unique:
             doc_frec[word] +=1
     
-    inv_doc_frec = {word : math.log(num_doc/doc_count) for word, doc_count in doc_frec.items()}
+    inv_doc_frec = {word : math.log(num_doc/(1+doc_count)) for word, doc_count in doc_frec.items()}
     return inv_doc_frec
