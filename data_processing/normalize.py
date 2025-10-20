@@ -1,5 +1,5 @@
 import string
-
+import re
 __all__ = ['normalize']
 
 class _diccionary:
@@ -66,8 +66,7 @@ def _expansion(text, diccionary_instance):
                 case c if j + 1 == long_words and c in diccionary_instance.contractions:
                     new_text += diccionary_instance.contractions[c] + '\n'
                 case _:
-                    new_text += c + '\n' 
-
+                    new_text += c + '\n'
     return new_text
 
 def normalize(texto, language):
@@ -76,34 +75,37 @@ def normalize(texto, language):
     texto = texto.lower()
     if language == 'en':
         texto = _expansion(texto, diccionary_instance)
-    newTexto = ""
-    largo = len(texto)
-    for i in range(largo):
+    new_text = ""
+    length = len(texto)
+    for i in range(length):
         char = texto[i]
         match char:
 
             case c if c in diccionary_instance.caracteres_acentados:
-                newTexto += diccionary_instance.caracteres_acentados[c]
+                new_text += diccionary_instance.caracteres_acentados[c]
                 print(diccionary_instance.caracteres_acentados[c])
 
-            case ('.' | ',' | '-') if (i>0 and i+1 < largo and _isDigit(texto[i-1]) and _isDigit(texto[i+1])):
+            case ('.' | ',' | '-') if (i>0 and i+1 < length and _isDigit(texto[i-1]) and _isDigit(texto[i+1])):
 
-                newTexto += char
+                new_text += char
 
             case ' ' | '\n':
 
-                newTexto += char
+                new_text += char
             
-            case '-' if (i>0 and i+1 < largo and texto[i-1] != ' ' and texto[i+1] != ' '  and not _isDigit(texto[i-1]) and not _isDigit(texto[i+1])):
+            case '-' if (i>0 and i+1 < length and texto[i-1] != ' ' and texto[i+1] != ' '  and not _isDigit(texto[i-1]) and not _isDigit(texto[i+1])):
 
-                newTexto +=  ' '
+                new_text +=  ' '
 
             case c if c in diccionary_instance.caracteres_especiales:
-
-                newTexto += ''
+                if i>0 and i+1<length:
+                    if texto[i-1] not in ' \n\r\t' and texto[i+1] not in ' \n\r\t':
+                        new_text += ' '
+                else:
+                    new_text += ''
 
             case _:
-                newTexto += char
-            
-
-    return newTexto
+                new_text += char
+        
+    new_text = re.sub(r'\s+', ' ', new_text).strip()
+    return new_text
