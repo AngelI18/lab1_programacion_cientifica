@@ -1,14 +1,9 @@
 __all__ = ['CalculoDelTF']
 
-def CalculoDelTF(documento, bag_of_words):
+def calcularTf(documento):
+    dic_tf = {}
+    for palabra in set(documento):
+        dic_tf[palabra] = documento.count(palabra)/len(documento)
+        
+    return dic_tf
     
-    bag_of_words = list(set(bag_of_words))
-    lista_tf = []
-    total_palabras = len(documento)
-    
-    for palabra in bag_of_words:
-        # frecuencia relativa
-        tf = documento.count(palabra) / total_palabras
-        lista_tf.append(tf)
-    
-    return lista_tf

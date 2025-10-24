@@ -1,17 +1,18 @@
-__all__ = ['CalculoIDF']
+import math
 
-def CalculoIDF(documentos, bag_of_words):
-    import math  
-    N = len(documentos)
-    idf_lista = []
+__all__ = ['calculoIdf']
 
-    for palabra in bag_of_words:
-        numero_de_documetos_palabra = 0
-        for doc in documentos:
-            if palabra in doc:
-                n_w += 1
-        # IDF logaritmo natural
-        idf = math.log(N / (1 + numero_de_documetos_palabra))
-        idf_lista.append(idf)
-    
-    return idf_lista
+def calculoIdf(lista_doc):
+
+    largo_corpus = len(lista_doc)
+    idf = {}
+
+    for doc in lista_doc:
+        for palabra in set(doc):  
+            idf[palabra] = idf.get(palabra, 0) + 1
+
+    for palabra, df in idf.items():
+        idf[palabra] = math.log(largo_corpus / (1 + df))
+
+    return idf
+
