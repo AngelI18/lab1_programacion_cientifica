@@ -4,6 +4,15 @@ __all__ = ['calculoIdf']
 
 import math
 
+def OperacionIdf(dic_data):
+    dic_IDF = {}
+
+    for genero, lista_doc in dic_data.items():
+        idf_genero = calculoIdf(lista_doc)
+        dic_IDF[genero] = idf_genero
+        
+    return dic_IDF
+
 def calculoIdf(lista_doc):
     largo_corpus = len(lista_doc)
     idf = {}
